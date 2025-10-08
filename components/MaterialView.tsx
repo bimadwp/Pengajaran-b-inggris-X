@@ -1,8 +1,7 @@
-
 import React, { useContext, useState } from 'react';
 import { AppContext } from '../App';
 import { procedureTextExamples } from '../constants';
-import { ProcedureText } from '../types';
+import { ProcedureText, ViewType } from '../types';
 import Button from './common/Button';
 import Card from './common/Card';
 import { ArrowLeft, Volume2, Languages } from 'lucide-react';
@@ -35,10 +34,15 @@ const MaterialView: React.FC = () => {
 
         return (
             <Card className="animate-fade-in">
-                <div className="flex justify-between items-start mb-4">
-                    <Button variant="ghost" onClick={() => setSelectedExample(null)} className="pl-0">
-                        <ArrowLeft className="mr-2 h-5 w-5" /> Back to Materials
-                    </Button>
+                <div className="flex justify-between items-start mb-4 flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-x-2">
+                        <Button variant="ghost" onClick={() => setSelectedExample(null)} className="pl-0">
+                            <ArrowLeft className="mr-2 h-5 w-5" /> Back to Materials
+                        </Button>
+                        <Button variant="ghost" onClick={() => context?.setView(ViewType.MENU)} className="pl-0">
+                            <ArrowLeft className="mr-2 h-5 w-5" /> Back to Menu
+                        </Button>
+                    </div>
                     <div className="flex space-x-2">
                          <Button variant="secondary" onClick={() => speak(fullText)}>
                              <Volume2 className="mr-2 h-5 w-5" /> Play Audio
@@ -74,7 +78,10 @@ const MaterialView: React.FC = () => {
     }
 
     return (
-        <div className="animate-fade-in space-y-8">
+        <div className="animate-fade-in space-y-6">
+            <Button variant="ghost" onClick={() => context?.setView(ViewType.MENU)} className="self-start pl-0">
+                <ArrowLeft className="mr-2 h-5 w-5" /> Back to Menu
+            </Button>
             <Card>
                 <h2 className="text-3xl font-bold mb-4 text-slate-800">Materi Lengkap: Procedure Text</h2>
                 

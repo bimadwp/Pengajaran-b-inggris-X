@@ -1,4 +1,3 @@
-
 import React, { useState, useContext, useRef } from 'react';
 import { quizQuestions } from '../constants';
 import { QuizQuestion, QuizType, MultipleChoiceQuestion, DragAndDropQuestion, WritingQuestion, ViewType } from '../types';
@@ -6,7 +5,7 @@ import Button from './common/Button';
 import Card from './common/Card';
 import { AppContext } from '../App';
 import { getAIFeedback } from '../services/geminiService';
-import { ArrowRight, Check, Send, Sparkles } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, Send, Sparkles } from 'lucide-react';
 
 const shuffleArray = <T,>(array: T[]): T[] => {
     return [...array].sort(() => Math.random() - 0.5);
@@ -184,29 +183,34 @@ const QuizView: React.FC = () => {
     };
 
     return (
-        <Card className="animate-fade-in">
-            <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-bold text-teal-600">Quiz Time!</h2>
-                <span className="text-slate-500 font-semibold">Question {currentQuestionIndex + 1} / {quizQuestions.length}</span>
-            </div>
-            
-            <div className="min-h-[400px]">
-                {renderQuestion()}
-            </div>
-            
-            <div className="mt-8 flex justify-end">
-                {isCorrect !== null || currentQuestion.type === QuizType.WRITING ? (
-                    <Button onClick={handleNextQuestion}>
-                        {currentQuestionIndex === quizQuestions.length - 1 ? 'Finish Quiz' : 'Next Question'}
-                        <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
-                ) : (
-                    <Button onClick={handleSubmit} disabled={selectedAnswer === null && dndItems.length === 0}>
-                        Submit Answer <Check className="ml-2 h-5 w-5" />
-                    </Button>
-                )}
-            </div>
-        </Card>
+        <div className="animate-fade-in space-y-4">
+            <Button variant="ghost" onClick={() => context?.setView(ViewType.MENU)} className="self-start pl-0">
+                <ArrowLeft className="mr-2 h-5 w-5" /> Back to Menu
+            </Button>
+            <Card>
+                <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-xl font-bold text-teal-600">Quiz Time!</h2>
+                    <span className="text-slate-500 font-semibold">Question {currentQuestionIndex + 1} / {quizQuestions.length}</span>
+                </div>
+                
+                <div className="min-h-[400px]">
+                    {renderQuestion()}
+                </div>
+                
+                <div className="mt-8 flex justify-end">
+                    {isCorrect !== null || currentQuestion.type === QuizType.WRITING ? (
+                        <Button onClick={handleNextQuestion}>
+                            {currentQuestionIndex === quizQuestions.length - 1 ? 'Finish Quiz' : 'Next Question'}
+                            <ArrowRight className="ml-2 h-5 w-5" />
+                        </Button>
+                    ) : (
+                        <Button onClick={handleSubmit} disabled={selectedAnswer === null && dndItems.length === 0}>
+                            Submit Answer <Check className="ml-2 h-5 w-5" />
+                        </Button>
+                    )}
+                </div>
+            </Card>
+        </div>
     );
 };
 
