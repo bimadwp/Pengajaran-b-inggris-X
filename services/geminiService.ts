@@ -3,13 +3,16 @@ import { GoogleGenAI } from "@google/genai";
 
 const API_KEY = process.env.API_KEY;
 
-if (!API_KEY) {
-    throw new Error("API_KEY environment variable not set");
-}
-
-const ai = new GoogleGenAI({ apiKey: API_KEY });
+// Initialize ai only if the API_KEY is available.
+// This prevents the app from crashing on environments where the key is not set,
+// like a Vercel deployment without the environment variable configured.
+const ai = API_KEY ? new GoogleGenAI({ apiKey: API_KEY }) : null;
 
 export const getAIFeedback = async (studentText: string, context: string): Promise<string> => {
+    if (!ai) {
+        return "AI feedback is currently unavailable. Please ensure the API_KEY is configured in your deployment environment.";
+    }
+
     if (!studentText.trim()) {
         return "Please write a procedure text first to get feedback.";
     }

@@ -55,11 +55,14 @@ const App: React.FC = () => {
     return (
         <AppContext.Provider value={contextValue}>
             <div className="min-h-screen bg-slate-100 text-slate-800 flex flex-col items-center p-4">
-                <div className="w-full max-w-4xl mx-auto">
+                <div className="w-full max-w-4xl mx-auto flex flex-col flex-grow">
                     <Header />
-                    <main className="mt-8">
+                    <main className="mt-8 flex-grow">
                         {renderView()}
                     </main>
+                    <footer className="text-center text-slate-400 mt-8 py-4">
+                        <p>© 2025 by bxm</p>
+                    </footer>
                 </div>
             </div>
         </AppContext.Provider>
